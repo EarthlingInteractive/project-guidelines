@@ -1,4 +1,4 @@
-const joi = require('joi')
+const joi = require('joi');
 
 const envVarsSchema = joi.object({  
   NODE_ENV: joi.string()
@@ -16,11 +16,11 @@ const envVarsSchema = joi.object({
     .falsy('false')
     .default(true)
 }).unknown()
-  .required()
+  .required();
 
-const { error, value: envVars } = joi.validate(process.env, envVarsSchema)  
+const { error, value: envVars } = joi.validate(process.env, envVarsSchema);
 if (error) {  
-  throw new Error(`Config validation error: ${error.message}`)
+  throw new Error(`Config validation error: ${error.message}`);
 }
 
 const config = {  
@@ -35,6 +35,6 @@ const config = {
     port: envVars.PORT
   }
   // ...
-}
+};
 
 module.exports = config;
