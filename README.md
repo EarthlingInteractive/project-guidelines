@@ -509,7 +509,7 @@ _Why:_
     _Why:_
     > This is a very well-known design to developers (your main API consumers). Apart from readability and ease of use, it allows us to write generic libraries and connectors without even knowing what the API is about.
 
-* use camelCase for URLs.
+* use kebab-case for URLs.
 * use camelCase for parameters in the query string or resource fields.
 * use plural camelCase for resource names in URLs.
 
