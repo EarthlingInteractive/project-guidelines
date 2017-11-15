@@ -1,14 +1,10 @@
 
-[中文版](./README-zh.md)
- | [日本語版](./README-ja.md)
- | [한국어](./README-ko.md)
-
-[<img src="./images/hive-red-logo.png" width="180" height="180">](http://wearehive.co.uk/)
+[<img src="./images/ei-logo.png" width="140" height="140">](http://www.earthlinginteractive.com)
 
 
 # Project Guidelines &middot; [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 > While developing a new project is like rolling on a green field for you, maintaining it is a potential dark twisted nightmare for someone else.
-Here's a list of guidelines we've found, written and gathered that (we think) works really well with most JavaScript projects here at [hive](http://wearehive.co.uk).
+Here's a list of guidelines we've found, written and gathered that (we think) works really well with most JavaScript projects here at [EI](http://www.earthlinginteractive.com).
 If you want to share a best practice, or think one of these guidelines should be removed, [feel free to share it with us](http://makeapullrequest.com).
 - [Git](#git)
     - [Some Git rules](#some-git-rules)
@@ -384,9 +380,9 @@ Having a good guideline for creating commits and sticking to it makes working wi
     _Why:_
     >Name it what you like, `dist` is also cool. But make sure that keep it consistent with your team. What gets in there is most likely generated  (bundled, compiled, transpiled) or moved there. What you can generate, your teammates should be able to generate too, so there is no point committing them into your remote repository. Unless you specifically want to. 
 
-* Use `PascalCase' 'camelCase` for filenames and directory names. Use  `PascalCase`  only for Components.
+* Use `camelCase` for filenames and directory names. Use  `PascalCase`  only for Components.
 
-* `CheckBox/index.js` should have the `CheckBox` component, as could `CheckBox.js`, but **not** `CheckBox/CheckBox.js` or `checkbox/CheckBox.js` which are redundant.
+* `checkBox/index.js` should have the `CheckBox` component, as could `CheckBox.js`, but **not** `checkbox/CheckBox.js` which are redundant.
 
 * Ideally the directory name should match the name of the default export of `index.js`.
 
@@ -411,17 +407,10 @@ Having a good guideline for creating commits and sticking to it makes working wi
     _Why:_
     > Breaking your build is one way of enforcing code style to your code. It prevents you from taking it less seriously. Do it for both client and server-side code. [read more...](https://www.robinwieruch.de/react-eslint-webpack-babel/)
 
-* Use [ESLint - Pluggable JavaScript linter](http://eslint.org/) to enforce code style.
+* Use [ESLint - Pluggable JavaScript linter](http://eslint.org/) or [TSLint](https://github.com/palantir/tslint) to enforce code style.
 
     _Why:_
     > We simply prefer `eslint`, you don't have to. It has more rules supported, the ability to configure the rules, and ability to add custom rules.
-
-* We use [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript) for JavaScript, [Read more](https://www.gitbook.com/book/duk/airbnb-javascript-guidelines/details). Use the javascript style guide required by the project or your team.
-
-* We use [Flow type style check rules for ESLint](https://github.com/gajus/eslint-plugin-flowtype) when using [FlowType](https://flow.org/).
-
-    _Why:_
-    > Flow introduces few syntaxes that also need to follow certain code style and be checked.
 
 * Use `.eslintignore` to exclude file or folders from code style check.
 
@@ -522,7 +511,7 @@ _Why:_
 
 * use kebab-case for URLs.
 * use camelCase for parameters in the query string or resource fields.
-* use plural kebab-case for resource names in URLs.
+* use plural camelCase for resource names in URLs.
 
 * Always use a plural nouns for naming a url pointing to a collection: `/users`.
 
@@ -734,7 +723,7 @@ For each endpoint explain:
 
     ```
     Required: id=[integer]
-    Optional: photo_id=[alphanumeric]
+    Optional: photoId=[alphanumeric]
     ```
 
 * If the request type is POST, provide working examples. URL Params rules apply here too. Separate the section into Optional and Required.

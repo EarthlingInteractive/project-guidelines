@@ -20,6 +20,9 @@ yarn-error.log*
 # Optional eslint cache
 .eslintcache
 
+# Typescript compiler cache
+/ts-node-*
+
 # dotenv environment variables file(s)
 .env
 .env.*
