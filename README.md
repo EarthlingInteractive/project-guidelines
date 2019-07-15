@@ -57,7 +57,7 @@ There are a set of rules to keep in mind:
 * Delete local and remote feature branches after merging.
     
     _Why:_
-    > It will clutter up your list of branches with dead branches.It insures you only ever merge the branch back into (`master` or `develop`) once. Feature branches should only exist while the work is still in progress.
+    > It will clutter up your list of branches with dead branches. It ensures you only ever merge the branch back into (`master` or `develop`) once. Feature branches should only exist while the work is still in progress.
 
 * Before making a Pull Request, make sure your feature branch builds successfully and passes all tests (including code style checks).
     
@@ -72,11 +72,11 @@ There are a set of rules to keep in mind:
 * Protect your `develop` and `master` branch.
   
     _Why:_
-    > It protects your production-ready branches from receiving unexpected and irreversible changes. read more... [Github](https://help.github.com/articles/about-protected-branches/) and [Bitbucket](https://confluence.atlassian.com/bitbucketserver/using-branch-permissions-776639807.html)
+    > It protects your production-ready branches from receiving unexpected and irreversible changes. read more... [Github](https://help.github.com/articles/about-protected-branches/), [Bitbucket](https://confluence.atlassian.com/bitbucketserver/using-branch-permissions-776639807.html) and [GitLab](https://docs.gitlab.com/ee/user/project/protected_branches.html)
 
 <a name="git-workflow"></a>
 ### 1.2 Git workflow
-Because of most of the reasons above, we use [Feature-branch-workflow](https://www.atlassian.com/git/tutorials/comparing-workflows#feature-branch-workflow) with [Interactive Rebasing](https://www.atlassian.com/git/tutorials/merging-vs-rebasing#the-golden-rule-of-rebasing) and some elements of [Gitflow](https://www.atlassian.com/git/tutorials/comparing-workflows#gitflow-workflow) (naming and having a develop branch). The main steps are as follow:
+Because of most of the reasons above, we use [Feature-branch-workflow](https://www.atlassian.com/git/tutorials/comparing-workflows#feature-branch-workflow) with [Interactive Rebasing](https://www.atlassian.com/git/tutorials/merging-vs-rebasing#the-golden-rule-of-rebasing) and some elements of [Gitflow](https://www.atlassian.com/git/tutorials/comparing-workflows#gitflow-workflow) (naming and having a develop branch). The main steps are as follows:
 
 * For a new project, initialize a git repository in the project directory. __For subsequent features/changes this step should be ignored__.
    ```sh
@@ -90,11 +90,18 @@ Because of most of the reasons above, we use [Feature-branch-workflow](https://w
     ```
 * Make Changes.
     ```sh
-    git add
-    git commit -a
+    git add <file1> <file2> ...
+    git commit
     ```
     _Why:_
-    > `git commit -a` will start an editor which lets you separate the subject from the body. Read more about it in *section 1.3*.
+    > `git add <file1> <file2> ... ` - you should add only files that make up a small and coherent change.
+    
+    > `git commit` will start an editor which lets you separate the subject from the body. 
+    
+    > Read more about it in *section 1.3*.
+    
+    _Tip:_
+    > You could use `git add -p` instead, which will give you chance to review all of the introduced changes one by one, and decide whether to include them in the commit or not.
 
 * Sync with remote to get changes you’ve missed.
     ```sh
@@ -103,7 +110,7 @@ Because of most of the reasons above, we use [Feature-branch-workflow](https://w
     ```
     
     _Why:_
-    > This will give you a chance to deal with conflicts on your machine while rebasing(later) rather than creating a Pull Request that contains conflicts.
+    > This will give you a chance to deal with conflicts on your machine while rebasing (later) rather than creating a Pull Request that contains conflicts.
     
 * Update your feature branch with latest changes from develop by interactive rebase.
     ```sh
@@ -114,7 +121,7 @@ Because of most of the reasons above, we use [Feature-branch-workflow](https://w
     _Why:_
     > You can use --autosquash to squash all your commits to a single commit. Nobody wants many commits for a single feature in develop branch. [read more...](https://robots.thoughtbot.com/autosquashing-git-commits)
     
-* If you don’t have conflict skip this step. If you have conflicts, [resolve them](https://help.github.com/articles/resolving-a-merge-conflict-using-the-command-line/)  and continue rebase.
+* If you don’t have conflicts, skip this step. If you have conflicts, [resolve them](https://help.github.com/articles/resolving-a-merge-conflict-using-the-command-line/)  and continue rebase.
     ```sh
     git add <file1> <file2> ...
     git rebase --continue
@@ -137,7 +144,7 @@ Because of most of the reasons above, we use [Feature-branch-workflow](https://w
   ```
   to remove all branches which are no longer on remote
   ```sh
-  git fetch -p && for branch in `git branch -vv | grep ': gone]' | awk '{print $1}'`; do git branch -D $branch; done
+  git fetch -p && for branch in `git branch -vv --no-color | grep ': gone]' | awk '{print $1}'`; do git branch -D $branch; done
   ```
 
 <a name="writing-good-commit-messages"></a>
@@ -477,7 +484,7 @@ Having a good guideline for creating commits and sticking to it makes working wi
 * Avoid client-side console logs in production
 
     _Why:_
-    > Even though your build process can(should) get rid of them, but make sure your code style check gives your warning about console logs.
+    > Even though your build process can (should) get rid of them, make sure that your code style checker warns you about leftover console logs.
 
 * Produce readable production logging. Ideally use logging libraries to be used in production mode (such as [winston](https://github.com/winstonjs/winston) or
 [node-bunyan](https://github.com/trentm/node-bunyan)).
@@ -641,13 +648,15 @@ _Why:_
 
     _Note: Keep security exception messages as generic as possible. For instance, Instead of saying ‘incorrect password’, you can reply back saying ‘invalid username or password’ so that we don’t unknowingly inform user that username was indeed correct and only the password was incorrect._
 
-* Use only these 8 status codes to send with you response to describe whether **everything worked**,
+* Use these status codes to send with your response to describe whether **everything worked**,
 The **client app did something wrong** or The **API did something wrong**.
     
     _Which ones:_
     > `200 OK` response represents success for `GET`, `PUT` or `POST` requests.
 
     > `201 Created` for when a new instance is created. Creating a new instance, using `POST` method returns `201` status code.
+
+    > `204 No Content` response represents success but there is no content to be sent in the response. Use it when `DELETE` operation succeeds.
 
     > `304 Not Modified` response is to minimize information transfer when the recipient already has cached representations.
 
@@ -662,13 +671,13 @@ The **client app did something wrong** or The **API did something wrong**.
     > `500 Internal Server Error` indicates that the request is valid, but the server could not fulfill it due to some unexpected condition.
 
     _Why:_
-    > Most API providers use a small subset HTTP status codes. For example, the Google GData API uses only 10 status codes, Netflix uses 9, and Digg, only 8. Of course, these responses contain a body with additional information.There are over 70 HTTP status codes. However, most developers don't have all 70 memorized. So if you choose status codes that are not very common you will force application developers away from building their apps and over to wikipedia to figure out what you're trying to tell them. [read more...](https://apigee.com/about/blog/technology/restful-api-design-what-about-errors)
+    > Most API providers use a small subset HTTP status codes. For example, the Google GData API uses only 10 status codes, Netflix uses 9, and Digg, only 8. Of course, these responses contain a body with additional information. There are over 70 HTTP status codes. However, most developers don't have all 70 memorized. So if you choose status codes that are not very common you will force application developers away from building their apps and over to wikipedia to figure out what you're trying to tell them. [read more...](https://apigee.com/about/blog/technology/restful-api-design-what-about-errors)
 
 
 * Provide total numbers of resources in your response.
 * Accept `limit` and `offset` parameters.
 
-* The amount of data the resource exposes should also be taken into account. The API consumer doesn't always need the full representation of a resource.Use a fields query parameter that takes a comma separated list of fields to include:
+* The amount of data the resource exposes should also be taken into account. The API consumer doesn't always need the full representation of a resource. Use a fields query parameter that takes a comma separated list of fields to include:
     ```
     GET /student?fields=id,name,age,class
     ```
@@ -698,7 +707,7 @@ These are some basic security best practices:
 
 * Your API should convert the received data to their canonical form or reject them. Return 400 Bad Request with details about any errors from bad or missing data.
 
-* All the data exchanged with the ReST API must be validated by the API.
+* All the data exchanged with the REST API must be validated by the API.
 
 * Serialize your JSON.
 
